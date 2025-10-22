@@ -1,5 +1,5 @@
 {
-    "name": "codex/laravel-singletonize",
+    "name": "huynt57/laravel-singletonize",
     "description": "Laravel package to default container resolution to singleton",
     "type": "library",
     "license": "MIT",
@@ -14,18 +14,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Codex\\LaravelSingletonize\\": "src/"
+            "Huynt57\\LaravelSingletonize\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Codex\\LaravelSingletonize\\Tests\\": "tests/"
+            "Huynt57\\LaravelSingletonize\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Codex\\LaravelSingletonize\\SingletonizeServiceProvider"
+                "Huynt57\\LaravelSingletonize\\SingletonizeServiceProvider"
             ],
             "aliases": {}
         }

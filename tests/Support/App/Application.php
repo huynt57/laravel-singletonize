@@ -1,6 +1,6 @@
 <?php
 
-namespace Codex\LaravelSingletonize\Tests\Support\App;
+namespace Huynt57\LaravelSingletonize\Tests\Support\App;
 
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;

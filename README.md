@@ -5,14 +5,14 @@ Laravel Singletonize is a lightweight package that switches the default behaviou
 ## Installation
 
 ```bash
-composer require codex/laravel-singletonize
+composer require huynt57/laravel-singletonize
 ```
 
 The service provider is auto-discovered through Laravel's package discovery. If you prefer to register it manually, add the provider to your `config/app.php` file:
 
 ```php
 'providers' => [
-    Codex\LaravelSingletonize\SingletonizeServiceProvider::class,
+    Huynt57\LaravelSingletonize\SingletonizeServiceProvider::class,
 ],
 ```
 
@@ -21,7 +21,7 @@ The service provider is auto-discovered through Laravel's package discovery. If 
 Publish the configuration file to toggle the behaviour at runtime:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="Codex\\LaravelSingletonize\\SingletonizeServiceProvider"
+php artisan vendor:publish --tag=config --provider="Huynt57\\LaravelSingletonize\\SingletonizeServiceProvider"
 ```
 
 The published file `config/laravel-singletonize.php` contains a single option:

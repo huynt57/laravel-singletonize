@@ -1,6 +1,6 @@
 <?php
 
-namespace Codex\LaravelSingletonize;
+namespace Huynt57\LaravelSingletonize;
 
 use Illuminate\Container\Container;
 

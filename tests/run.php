@@ -7,8 +7,8 @@ ini_set('assert.exception', '1');
 
 spl_autoload_register(function (string $class): void {
     $prefixes = [
-        'Codex\\LaravelSingletonize\\Tests\\' => __DIR__.'/',
-        'Codex\\LaravelSingletonize\\' => __DIR__.'/../src/',
+        'Huynt57\\LaravelSingletonize\\Tests\\' => __DIR__.'/',
+        'Huynt57\\LaravelSingletonize\\' => __DIR__.'/../src/',
         'Illuminate\\' => __DIR__.'/Support/Illuminate/',
     ];
 

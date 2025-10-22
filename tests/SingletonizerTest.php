@@ -1,7 +1,7 @@
 <?php
 
-use Codex\LaravelSingletonize\SingletonizeServiceProvider;
-use Codex\LaravelSingletonize\Tests\Support\App\Application;
+use Huynt57\LaravelSingletonize\SingletonizeServiceProvider;
+use Huynt57\LaravelSingletonize\Tests\Support\App\Application;
 
 class SampleService
 {
