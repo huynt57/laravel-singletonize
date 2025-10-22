@@ -10,6 +10,8 @@ Laravel Singletonize is tested against Laravel 10.x, 11.x, and 12.x applications
 
 Laravel's automatic resolution relies heavily on reflection to discover constructor dependencies on every request. For large codebases with many services, repeatedly reflecting on types becomes expensive and increases bootstrapping time. By promoting implicitly resolved services to singletons, the package ensures the reflection work is only performed once per service lifecycle, which can noticeably improve application performance.
 
+This package was inspired by a Laravel core PR that aimed to improve container performance, although it was never merged into the framework itself: https://github.com/laravel/framework/pull/51209
+
 ## Installation
 
 ```bash
