@@ -76,6 +76,34 @@ return function (): array {
         assert($first === $second, 'Bindings resolved through closures should be shared.');
     };
 
+    $tests['creates_fresh_instance_after_forget'] = function () {
+        $app = new Application();
+        $app->register(SingletonizeServiceProvider::class);
+
+        $original = $app->make(SampleService::class);
+
+        $app->forgetInstance(SampleService::class);
+
+        $replacement = $app->make(SampleService::class);
+
+        assert($original !== $replacement, 'Forgetting an instance should produce a new object.');
+        assert($replacement === $app->make(SampleService::class), 'Subsequent resolutions should reuse the replacement instance.');
+    };
+
+    $tests['creates_fresh_instances_after_forget_all'] = function () {
+        $app = new Application();
+        $app->register(SingletonizeServiceProvider::class);
+
+        $first = $app->make(SampleService::class);
+
+        $app->forgetInstances();
+
+        $second = $app->make(SampleService::class);
+
+        assert($first !== $second, 'Forgetting all instances should produce a new object.');
+        assert($second === $app->make(SampleService::class), 'Subsequent resolutions should reuse the new instance.');
+    };
+
     $tests['can_disable_through_config'] = function () {
         $app = new Application([
             'laravel-singletonize' => [
