@@ -46,9 +46,14 @@ Set `enabled` to `false` to restore Laravel's default behaviour of creating a fr
 
 ## How it works
 
-The package listens to the container's resolution lifecycle events. When a type is resolved for the first time, the resolved instance is cached and immediately re-registered in the container. Subsequent resolutions therefore reuse the same instance, effectively promoting every binding (including implicit bindings) to a singleton while still respecting contextual parameters.
+Singletonize boots a small helper (`Huynt57\LaravelSingletonize\Singletonizer`) that hooks into Laravel's container before any concrete is resolved. The helper inspects the abstract being requested and, the first time it encounters a class name, rewrites the container's internal binding definition to:
 
-Parameterised resolutions continue to return fresh instances, ensuring factories and runtime arguments behave as expected.
+1. Wrap the original concrete (class name, closure, or alias) in a memoized closure that stores the first resolved instance in `$container->instances`.
+2. Mark the binding as `shared`, so future resolutions skip the normal reflection/build process.
+
+Because the memoized closure still receives the container and the original parameter array, contextual bindings and parameterised `make()` calls continue to work. When parameters are provided, the memoized closure bypasses the cached instance and rebuilds the object, ensuring runtime factories keep their expected behaviour.
+
+The helper only runs once per abstract per request, so the bookkeeping overhead is minimal while every implicitly resolved service becomes a singleton automatically.
 
 ## Testing
 
