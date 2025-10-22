@@ -45,6 +45,10 @@ class Singletonizer
 
         $this->shared[$abstract] = true;
 
+        $container->resolving($abstract, function ($object, Container $container) use ($abstract) {
+            $container->instance($abstract, $object);
+        });
+
         $callback = function () use ($abstract) {
             if (isset($this->bindings[$abstract])) {
                 $this->bindings[$abstract]['shared'] = true;
