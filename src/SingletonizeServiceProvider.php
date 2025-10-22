@@ -11,15 +11,7 @@ class SingletonizeServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-singletonize.php', 'laravel-singletonize');
 
         $this->app->singleton(Singletonizer::class, function ($app) {
-            $config = $app['config'] ?? null;
-
-            $enabled = true;
-
-            if ($config && method_exists($config, 'get')) {
-                $enabled = (bool) $config->get('laravel-singletonize.enabled', true);
-            }
-
-            return new Singletonizer($app, $enabled);
+            return new Singletonizer($app);
         });
     }
 
