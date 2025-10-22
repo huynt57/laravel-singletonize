@@ -164,7 +164,15 @@ class Container implements ArrayAccess
 
     protected function isShared(string $abstract): bool
     {
-        return true;
+        if (array_key_exists($abstract, $this->instances)) {
+            return true;
+        }
+
+        if (isset($this->bindings[$abstract])) {
+            return $this->bindings[$abstract]['shared'];
+        }
+
+        return false;
     }
 
     protected function build(mixed $concrete, array $parameters = []): mixed

@@ -21,6 +21,10 @@ class SingletonizeServiceProvider extends ServiceProvider
             __DIR__.'/../config/laravel-singletonize.php' => $this->configPath('laravel-singletonize.php'),
         ], 'config');
 
+        if (! $this->app['config']->get('laravel-singletonize.enabled', true)) {
+            return;
+        }
+
         $this->app->make(Singletonizer::class)->boot();
     }
 

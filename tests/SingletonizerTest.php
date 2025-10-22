@@ -105,7 +105,7 @@ return function (): array {
         assert($second === $app->make(SampleService::class), 'Subsequent resolutions should reuse the new instance.');
     };
 
-    $tests['config_toggle_has_no_effect'] = function () {
+    $tests['config_can_disable_singletonizer'] = function () {
         $app = new Application([
             'laravel-singletonize' => [
                 'enabled' => false,
@@ -117,7 +117,7 @@ return function (): array {
         $first = $app->make(SampleService::class);
         $second = $app->make(SampleService::class);
 
-        assert($first === $second, 'The container should continue sharing instances regardless of configuration.');
+        assert($first !== $second, 'The container should resolve fresh instances when the package is disabled.');
     };
 
     return $tests;
