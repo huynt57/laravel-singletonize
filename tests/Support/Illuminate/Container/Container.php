@@ -245,11 +245,23 @@ class Container implements ArrayAccess
         }
     }
 
-    public function beforeResolvingAny(Closure $callback): static
+    public function beforeResolving(Closure|string|null $abstract, ?Closure $callback = null): static
     {
-        $this->beforeResolvingCallbacks['*'][] = $callback;
+        if ($abstract instanceof Closure) {
+            $callback = $abstract;
+            $abstract = null;
+        }
+
+        $abstract = $abstract ?? '*';
+
+        $this->beforeResolvingCallbacks[$abstract][] = $callback;
 
         return $this;
+    }
+
+    public function beforeResolvingAny(Closure $callback): static
+    {
+        return $this->beforeResolving('*', $callback);
     }
 
     public function resolving(Closure|string $abstract, ?Closure $callback = null): static
