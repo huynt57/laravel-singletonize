@@ -1,0 +1,38 @@
+{
+    "name": "huynt57/laravel-singletonize",
+    "description": "Laravel package to default container resolution to singleton",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "illuminate/container": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Huynt57\\LaravelSingletonize\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Huynt57\\LaravelSingletonize\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Huynt57\\LaravelSingletonize\\SingletonizeServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "php tests/run.php"
+    }
+}
