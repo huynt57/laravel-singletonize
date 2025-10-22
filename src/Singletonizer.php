@@ -29,7 +29,7 @@ class Singletonizer
 
         $this->booted = true;
 
-        $this->container->beforeResolving(null, function ($abstract, array $parameters, Container $container) {
+        $this->container->beforeResolving(function ($abstract, array $parameters, Container $container) {
             $this->ensureSharedBinding($abstract, $container);
         });
     }
