@@ -52,14 +52,15 @@ return function (): array {
         assert($first->sample === $second->sample, 'Nested dependency should also be shared.');
     };
 
-    $tests['resolves_new_instance_with_parameters'] = function () {
+    $tests['shares_instances_even_with_parameters'] = function () {
         $app = new Application();
         $app->register(SingletonizeServiceProvider::class);
 
         $first = $app->make(ParameterizedService::class, ['value' => 'first']);
         $second = $app->make(ParameterizedService::class, ['value' => 'second']);
 
-        assert($first !== $second, 'Parameterized resolutions should not be shared.');
+        assert($first === $second, 'Parameterized resolutions should be shared.');
+        assert($second->value === 'first', 'Subsequent resolutions should reuse the initial instance.');
     };
 
     $tests['shares_bound_bindings'] = function () {
@@ -104,7 +105,7 @@ return function (): array {
         assert($second === $app->make(SampleService::class), 'Subsequent resolutions should reuse the new instance.');
     };
 
-    $tests['can_disable_through_config'] = function () {
+    $tests['config_toggle_has_no_effect'] = function () {
         $app = new Application([
             'laravel-singletonize' => [
                 'enabled' => false,
@@ -116,7 +117,7 @@ return function (): array {
         $first = $app->make(SampleService::class);
         $second = $app->make(SampleService::class);
 
-        assert($first !== $second, 'Disabling via config should restore default behaviour.');
+        assert($first === $second, 'The container should continue sharing instances regardless of configuration.');
     };
 
     return $tests;
