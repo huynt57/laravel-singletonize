@@ -2,6 +2,10 @@
 
 Laravel Singletonize is a lightweight package that switches the default behaviour of the Laravel service container to resolve dependencies as singletons. Once installed, every concrete that is resolved without an explicit binding will automatically be cached and reused by the container.
 
+## Compatibility
+
+Laravel Singletonize is tested against Laravel 10.x, 11.x, and 12.x applications.
+
 ## Why this package?
 
 Laravel's automatic resolution relies heavily on reflection to discover constructor dependencies on every request. For large codebases with many services, repeatedly reflecting on types becomes expensive and increases bootstrapping time. By promoting implicitly resolved services to singletons, the package ensures the reflection work is only performed once per service lifecycle, which can noticeably improve application performance.
