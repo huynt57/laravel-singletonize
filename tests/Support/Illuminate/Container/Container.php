@@ -113,7 +113,7 @@ class Container implements ArrayAccess
 
         $this->fireBeforeResolvingCallbacks($abstract, $parameters);
 
-        if (array_key_exists($abstract, $this->instances)) {
+        if (empty($parameters) && array_key_exists($abstract, $this->instances)) {
             return $this->instances[$abstract];
         }
 

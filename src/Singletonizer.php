@@ -2,6 +2,7 @@
 
 namespace Huynt57\LaravelSingletonize;
 
+use Closure;
 use Illuminate\Container\Container;
 
 class Singletonizer
@@ -45,19 +46,50 @@ class Singletonizer
 
         $this->shared[$abstract] = true;
 
-        $callback = function () use ($abstract) {
+        $singletonizer = $this;
+
+        $callback = function () use ($abstract, $container, $singletonizer) {
             if (isset($this->bindings[$abstract])) {
+                $binding = $this->bindings[$abstract];
+
+                $this->bindings[$abstract]['concrete'] = $singletonizer->createSharedConcrete(
+                    $container,
+                    $abstract,
+                    $binding['concrete']
+                );
+
                 $this->bindings[$abstract]['shared'] = true;
 
                 return;
             }
 
             $this->bindings[$abstract] = [
-                'concrete' => $abstract,
+                'concrete' => $singletonizer->createSharedConcrete($container, $abstract, $abstract),
                 'shared' => true,
             ];
         };
 
         ($callback->bindTo($container, $container))();
+    }
+
+    public function createSharedConcrete(Container $container, string $abstract, mixed $concrete): Closure
+    {
+        $factory = function (Container $container, array $parameters = []) use ($abstract, $concrete) {
+            if (isset($this->instances[$abstract])) {
+                return $this->instances[$abstract];
+            }
+
+            if ($concrete === $abstract) {
+                $object = $this->build($concrete, $parameters);
+            } elseif ($concrete instanceof Closure) {
+                $object = $concrete($container, $parameters);
+            } else {
+                $object = $this->make($concrete, $parameters);
+            }
+
+            return $this->instances[$abstract] = $object;
+        };
+
+        return $factory->bindTo($container, $container);
     }
 }
