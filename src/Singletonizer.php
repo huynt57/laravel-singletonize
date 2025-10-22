@@ -78,6 +78,18 @@ class Singletonizer
         }
 
         if (array_key_exists($abstract, $this->instances)) {
+            $containerHasInstance = method_exists($container, 'hasInstance')
+                ? $container->hasInstance($abstract)
+                : $container->resolved($abstract);
+
+            if (! $containerHasInstance) {
+                unset($this->instances[$abstract]);
+
+                $this->resolutionStack[] = $abstract;
+
+                return;
+            }
+
             $container->instance($abstract, $this->instances[$abstract]);
 
             return;
