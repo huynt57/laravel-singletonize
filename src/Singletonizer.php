@@ -42,7 +42,7 @@ class Singletonizer
 
         $this->booted = true;
 
-        $this->container->beforeResolvingAny(function ($abstract, array $parameters, Container $container) {
+        $this->container->beforeResolving(null, function ($abstract, array $parameters, Container $container) {
             $this->handleBeforeResolving($abstract, $parameters, $container);
         });
 
